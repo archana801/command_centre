@@ -1,0 +1,426 @@
+
+<div class="topbar">
+  <div class="logo"><img src="/kmak-wordmark.png" alt="KMAK Fitness" class="logo-mark"><span class="logo-os">OS</span><small>Coaching Performance OS</small></div>
+  <div class="site-sel" title="KMAK Fitness"><b>KMAK Fitness</b> · Online + London <span class="chev">▾</span></div>
+  <div class="sync"><span class="pulse"></span> Live · synced 06:00 today</div>
+  <div class="role-sel" title="Switch role to see access levels">
+    <span class="rlbl">Viewing as</span>
+    <div class="seg" id="roleSeg">
+      <button class="on" data-r="owner">Owner</button>
+      <button data-r="coo">COO</button>
+      <button data-r="coach">Coach</button>
+      <button data-r="setter">Setter</button>
+    </div>
+  </div>
+  <div class="ticker gated role-owner" onclick="go('valuation')" title="Open valuation">
+    <span class="lbl">KMAK value</span>
+    <span class="val" id="tickerVal">£412k</span>
+    <span class="delta">▲ £9k this month</span>
+  </div>
+</div>
+
+<div class="shell">
+<nav class="side" aria-label="Sections">
+  <button class="sb on" data-s="overview" onclick="go('overview',this)"><span class="dot" style="background:var(--brand)"></span>Command centre</button>
+  <div class="sg">Performance pillars</div>
+  <button class="sb gated role-owner role-coo" data-s="profit" onclick="go('profit',this)"><span class="dot" style="background:var(--live)"></span>Profit · finance<span class="pill">12</span></button>
+  <button class="sb gated role-owner role-coo" data-s="payroll" onclick="go('payroll',this)"><span class="dot" style="background:#5bd6a8"></span>Pay &amp; coaches<span class="pill">new</span></button>
+  <button class="sb gated role-owner" data-s="valuation" onclick="go('valuation',this)"><span class="dot" style="background:#ffa6a6"></span>Valuation<span class="pill">new</span></button>
+  <button class="sb gated role-owner role-coo role-setter" data-s="convert" onclick="go('convert',this)"><span class="dot" style="background:#9ccc65"></span>Convert · sales<span class="pill">7</span></button>
+  <button class="sb gated role-owner role-coo role-coach" data-s="care" onclick="go('care',this)"><span class="dot" style="background:#f48fb1"></span>Care · coaching<span class="pill">10</span></button>
+  <button class="sb gated role-owner role-coo" data-s="team" onclick="go('team',this)"><span class="dot" style="background:#b39ddb"></span>Team · people<span class="pill">6</span></button>
+  <button class="sb gated role-owner role-coo role-coach" data-s="delight" onclick="go('delight',this)"><span class="dot" style="background:#ff8a65"></span>Delight · clients<span class="pill">8</span></button>
+  <div class="sg gated role-owner role-coo role-coach">Intelligence</div>
+  <button class="sb ai gated role-owner role-coo role-coach" data-s="ai" onclick="go('ai',this)">⚡ AI coaching partner</button>
+  <button class="sb ai gated role-owner role-coo" data-s="sop" onclick="go('sop',this)">📋 SOP builder</button>
+  <button class="sb gated role-coach role-setter" data-s="myperf" onclick="go('myperf',this)"><span class="dot" style="background:#ffa6a6"></span>My performance<span class="pill">you</span></button>
+  <div class="sg gated role-owner role-coo">Operations</div>
+  <a class="sb gated role-owner role-coo" href="/events"><span class="dot" style="background:#64d8cb"></span>Events</a>
+  <div class="integ">
+    <h4>Data sources</h4>
+    <div class="ig"><span class="st"></span>Stripe<time>06:00</time></div>
+    <div class="ig"><span class="st"></span>Meta Ads<time>05:30</time></div>
+    <div class="ig"><span class="st"></span>Pulse IO<time>06:05</time></div>
+    <div class="ig"><span class="st"></span>Groundhogg CRM<time>06:00</time></div>
+    <div class="ig"><span class="st warn"></span>Instagram<time>1d ago</time></div>
+  </div>
+</nav>
+
+<main class="main">
+<!-- ================= COMMAND CENTRE ================= -->
+<section class="sec on" id="sec-overview">
+  <div class="crumb">Sunday 12 July 2026 · all channels</div>
+  <div class="sec-hd"><h2>Command centre</h2><span class="goal">The morning read — every pillar, one screen</span></div>
+  <div class="role-banner"><span class="rchip">owner</span><span>You're viewing as <b class="rname">Owner</b>. <span class="rdesc">Full access — every pillar, the valuation, finances and the AI partner.</span> Switch role in the top bar to see how access changes.</span></div>
+  <div class="demo-banner"><b>Sample data.</b> Figures below are illustrative placeholders shaped like KMAK's real numbers. Once wired to Stripe, Groundhogg, Pulse IO and Meta, every card refreshes automatically.</div>
+
+  <div class="grid g4">
+    <div class="card hl gated role-owner role-coo">
+      <h3>Break-even / coach / month <span class="src">Xero + coach roster</span></h3>
+      <div class="kn">£2,180</div>
+      <div class="ksub">Fixed cost £1,240/coach ÷ contribution margin 57%</div>
+      <div class="kdelta up">▼ £60 vs last quarter (overhead trimmed)</div>
+    </div>
+    <div class="card gated role-owner role-coo role-coach">
+      <h3>Revenue / coach (avg) <span class="src">Groundhogg + Stripe</span></h3>
+      <div class="kn">£3,410</div>
+      <div class="ksub">£1,230 above break-even · 6 coaches active</div>
+      <div class="meter"><i style="width:74%"></i></div>
+      <div class="kdelta up">All coaches profitable except 1 (ramping)</div>
+    </div>
+    <div class="card gated role-owner">
+      <h3>Adjusted net profit (LTM) <span class="src">Xero</span></h3>
+      <div class="kn">£142k<small> · 28.6%</small></div>
+      <div class="ksub">Rolling 12 months, live from your P&amp;L</div>
+      <div class="kdelta up">▲ £3.1k this month</div>
+    </div>
+    <div class="card">
+      <h3>Client capacity utilised <span class="src">Groundhogg + Pulse IO</span></h3>
+      <div class="kn">336<small>/375</small></div>
+      <div class="ksub">90% utilised · avg 60–65 capacity per coach</div>
+      <div class="meter"><i style="width:90%"></i></div>
+    </div>
+  </div>
+
+  <div class="grid g23 gated role-owner role-coo role-coach">
+    <div class="card">
+      <h3>Weekly revenue vs break-even — last 14 weeks <span class="src">Stripe + Xero</span></h3>
+      <div class="chart-wrap" id="prodChart"></div>
+      <div class="legend"><span><i style="background:var(--brand2)"></i>Avg revenue / coach</span><span><i style="background:var(--red)"></i>Break-even £2,180</span><span><i style="background:var(--muted)"></i>Target £3,600</span></div>
+    </div>
+    <div class="card gated role-owner role-coo">
+      <h3>Needs attention <span class="src">All sources</span></h3>
+      <div class="alert"><span class="ic" style="background:var(--red)"></span><div><b>2 clients silent on check-ins 6+ days</b><p>No response since last Monday — renewal window in 3 weeks for one.</p></div><span class="when">Care</span></div>
+      <div class="alert"><span class="ic" style="background:var(--amb)"></span><div><b>3 clients renew this week, no contact logged</b><p>Renewal outreach hasn't happened yet for this batch.</p></div><span class="when">Delight</span></div>
+      <div class="alert"><span class="ic" style="background:var(--amb)"></span><div><b>6 high-intent DMs uncontacted since yesterday</b><p>Flagged high-intent by lead scoring, no reply in 12+ hours.</p></div><span class="when">Convert</span></div>
+      <div class="alert"><span class="ic" style="background:var(--amb)"></span><div><b>Coach 4 trailing team average on adherence</b><p>71% vs 84% team average, two weeks running.</p></div><span class="when">Team</span></div>
+    </div>
+  </div>
+
+  <div class="grid g4 gated role-owner role-coo">
+    <div class="card"><h3>Active clients <span class="src">Groundhogg</span></h3><div class="kn">336</div><div class="ksub">Capacity 375 · 90% utilised</div></div>
+    <div class="card"><h3>New leads this week <span class="src">Meta + IG</span></h3><div class="kn">31</div><div class="kdelta up">▲ 4 vs last week</div></div>
+    <div class="card"><h3>Churn risk (flagged) <span class="src">Pulse IO</span></h3><div class="kn">5</div><div class="ksub">Adherence below 60% for 2+ weeks</div></div>
+    <div class="card"><h3>Coach caseload range <span class="src">Groundhogg</span></h3><div class="kn">38–63</div><div class="ksub">Widest gap: Coach 1 vs Coach 6</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Revenue booked → collected → net kept <span class="src">Stripe + Xero</span></h3>
+    <div class="bridge">
+      <div class="bcol"><span class="bv">£41.2k</span><div class="bar" style="height:100%;background:var(--blue)"></div><span class="bl">Billed (retainers + packages)</span></div>
+      <div class="bcol"><span class="bv">−£1.8k</span><div class="bar" style="height:4%;background:var(--red)"></div><span class="bl">Failed payments</span></div>
+      <div class="bcol"><span class="bv">−£0.9k</span><div class="bar" style="height:2%;background:var(--red)"></div><span class="bl">Refunds / pauses</span></div>
+      <div class="bcol"><span class="bv">−£1.1k</span><div class="bar" style="height:3%;background:var(--amb)"></div><span class="bl">Discounts given</span></div>
+      <div class="bcol"><span class="bv">£37.4k</span><div class="bar" style="height:91%;background:linear-gradient(180deg,#2dd4a8,#900000)"></div><span class="bl">Cash collected</span></div>
+    </div>
+    <div class="note">The gap between billed and collected is where quiet money leaks — failed cards, pauses, over-generous discounts. This month you collected 91% of billed revenue; the 9% gap is £3.8k.</div>
+  </div>
+
+  <div class="card">
+    <h3>Break-even sensitivity — overhead × coach headcount <span class="src">engine</span></h3>
+    <table>
+      <thead><tr><th>Coaches</th><th class="num">£9.0k</th><th class="num">£9.6k</th><th class="num" style="color:#ffa6a6">£10.4k (now)</th><th class="num">£11.0k</th><th class="num">£12.0k</th></tr></thead>
+      <tbody>
+        <tr><td>5.0</td><td class="num">£1,580</td><td class="num">£1,687</td><td class="num">£1,825</td><td class="num">£1,930</td><td class="num">£2,105</td></tr>
+        <tr style="background:rgba(224,8,8,.05)"><td><b>6.0 (now)</b></td><td class="num">£1,316</td><td class="num">£1,406</td><td class="num" style="color:#ffa6a6"><b>£2,180</b></td><td class="num">£1,608</td><td class="num">£1,754</td></tr>
+        <tr><td>7.0</td><td class="num">£1,128</td><td class="num">£1,206</td><td class="num">£1,304</td><td class="num">£1,379</td><td class="num">£1,504</td></tr>
+        <tr><td>8.0</td><td class="num">£987</td><td class="num">£1,055</td><td class="num">£1,141</td><td class="num">£1,206</td><td class="num">£1,316</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Hiring a 7th coach would drop break-even to roughly £1,304/coach/month — but only pays off once their caseload fills. Modelled on current 57% contribution margin.</div>
+  </div>
+</section>
+
+<!-- ================= VALUATION ================= -->
+<section class="sec" id="sec-valuation">
+  <div class="crumb">Intelligence · Valuation</div>
+  <div class="sec-hd"><h2>What KMAK is worth — today</h2><span class="goal">Live, indicative, updated with every P&amp;L sync</span></div>
+  <p class="sec-sub">Every pound of recurring profit you add is multiplied at exit or partnership buy-in. This view converts live adjusted net profit into an indicative business value, so it's visible how today's numbers move the number that matters.</p>
+  <div class="demo-banner"><b>How this is worked out.</b> Value = adjusted net profit × a multiple. The multiple isn't fixed — it moves with how much revenue is recurring vs one-off, how concentrated clients are around one or two coaches vs Kunal, whether coaches are on contracts, and growth trend. The ranges below are illustrative UK coaching-business broker benchmarks, not KMAK-specific yet — replace them once you have real profit figures and, ideally, an accountant or broker's view on the right multiple for KMAK's mix.</div>
+
+  <div class="grid g32">
+    <div class="card hl">
+      <h3>Indicative business value <span class="src">Xero + market multiples</span></h3>
+      <div class="vbig" id="valBig">£412,000</div>
+      <div class="vrange" id="valRange">Range £358,000 – £495,000 at 2.6–3.5×</div>
+      <div class="kdelta up" style="margin-top:8px">▲ £9,000 this month — driven by £3.1k profit gain &amp; lower churn</div>
+      <div style="margin-top:18px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--soft)"><span>Net profit multiple</span><b style="font-family:var(--mono);color:var(--txt)" id="multLbl">2.9×</b></div>
+        <input type="range" class="vslider" min="20" max="45" value="29" id="multSlider" aria-label="Net profit multiple">
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--muted)"><span>2.0×</span><span>2.9×</span><span>4.5×</span></div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:11px;color:var(--soft)">Profile:</span>
+        <div class="seg" id="segType">
+          <button class="on" data-m="29">Coach-led, recurring MRR</button>
+          <button data-m="20">Founder-led, high concentration</button>
+          <button data-m="38">Diversified, SOP-documented</button>
+        </div>
+      </div>
+      <div class="note">Indicative only — not a formal valuation. Refresh quarterly once you have real broker or accountant input.</div>
+    </div>
+    <div class="card">
+      <h3>Adjusted net profit bridge (LTM) <span class="src">Xero</span></h3>
+      <div class="bridge">
+        <div class="bcol"><span class="bv">£108k</span><div class="bar" style="height:76%;background:var(--blue)"></div><span class="bl">Operating profit</span></div>
+        <div class="bcol"><span class="bv">+£27k</span><div class="bar" style="height:19%;background:var(--live)"></div><span class="bl">Owner pay above coaching rate</span></div>
+        <div class="bcol"><span class="bv">+£7k</span><div class="bar" style="height:5%;background:var(--live)"></div><span class="bl">One-off rebrand cost</span></div>
+        <div class="bcol"><span class="bv">£142k</span><div class="bar" style="height:100%;background:linear-gradient(180deg,#e00808,#900000)"></div><span class="bl">Adjusted net profit</span></div>
+      </div>
+      <div class="note">Add-backs follow the same normalisation a buyer's accountant would apply.</div>
+    </div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card"><h3>What moves value most</h3>
+      <table><tbody>
+        <tr><td>Cut client churn to &lt;5%/month</td><td class="num up">+£38k</td></tr>
+        <tr><td>Grow MRR to £45k</td><td class="num up">+£29k</td></tr>
+        <tr><td>Reduce Kunal-delivered sessions to &lt;20%</td><td class="num up">+£22k</td></tr>
+        <tr><td>Diversify beyond top 2 coaches</td><td class="num up">+£15k</td></tr>
+      </tbody></table>
+      <div class="tdesc" style="margin-top:8px">Each scenario × current 2.9× multiple.</div>
+    </div>
+    <div class="card"><h3>Value over time</h3><div id="valChart"></div><div class="tdesc" style="margin-top:6px">Indicative value, monthly, last 12 months</div></div>
+    <div class="card"><h3>Market context <span class="src">UK broker data</span></h3>
+      <div class="tdesc" style="margin-bottom:6px">Illustrative UK coaching / fitness-service multiples (net profit basis):</div>
+      <table><tbody>
+        <tr><td>All coaching / PT businesses</td><td class="num">2.5–3.5×</td></tr>
+        <tr><td>Recurring-membership models</td><td class="num">3.0–4.5×</td></tr>
+        <tr><td>Owner-operator, low delegation</td><td class="num">1.5–2.5×</td></tr>
+        <tr><td>Team-delivered, contract-based</td><td class="num">3.0–4.0×</td></tr>
+      </tbody></table>
+      <div class="tdesc" style="margin-top:8px">Ranges are wide and buyer-dependent. Treat as a conversation starter, not a number to quote.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONVERT ================= -->
+<section class="sec" id="sec-convert">
+  <div class="crumb">Pillar · Convert</div>
+  <div class="sec-hd"><h2>Convert — lead to signed client</h2><span class="goal">Where leads fall out of the funnel</span></div>
+  <p class="sec-sub">From first DM to signed retainer — conversion at every stage, and which channel and setter perform best.</p>
+
+  <div class="grid g23">
+    <div class="card">
+      <h3>Funnel — last 30 days <span class="src">Groundhogg</span></h3>
+      <div class="fstage"><div class="frow"><b>Leads (DM + ads + referral)</b><span class="fn">184</span></div><div class="fbar"><i style="width:100%"></i></div></div>
+      <div class="fstage"><div class="frow"><b>Consults booked</b><span class="fn">61</span></div><div class="fbar"><i style="width:33%"></i></div><div class="fconv">33% of leads book a consult</div></div>
+      <div class="fstage"><div class="frow"><b>Consults attended</b><span class="fn">52</span></div><div class="fbar"><i style="width:28%"></i></div><div class="fconv">85% show-up rate</div></div>
+      <div class="fstage"><div class="frow"><b>Clients signed</b><span class="fn">21</span></div><div class="fbar"><i style="width:11%"></i></div><div class="fconv">40% of attended consults close</div></div>
+      <div class="note">Biggest leak is lead → booked (33%). A faster first-response on high-intent DMs is the fastest lever here.</div>
+    </div>
+    <div class="card">
+      <h3>Lead source performance <span class="src">Meta + IG + Groundhogg</span></h3>
+      <table>
+        <thead><tr><th>Source</th><th class="num">CPL</th><th class="num">Booked %</th><th class="num">Close %</th></tr></thead>
+        <tbody>
+          <tr><td>Instagram organic</td><td class="num">£0</td><td class="num">41%</td><td class="num">52%</td></tr>
+          <tr><td>Meta ads</td><td class="num">£26.70</td><td class="num">24%</td><td class="num">31%</td></tr>
+          <tr><td>Referral</td><td class="num">£0</td><td class="num">58%</td><td class="num">61%</td></tr>
+        </tbody>
+      </table>
+      <div class="tdesc" style="margin-top:8px">Referral converts best but is the smallest volume.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Setter performance <span class="src">Groundhogg</span></h3>
+    <table>
+      <thead><tr><th>Setter</th><th class="num">DMs handled</th><th class="num">Consults booked</th><th class="num">Close rate</th><th>vs team avg</th></tr></thead>
+      <tbody>
+        <tr><td>Setter — A</td><td class="num">74</td><td class="num">28</td><td class="num">44%</td><td><span class="pctl top">▲ top</span></td></tr>
+        <tr><td>Setter — B</td><td class="num">61</td><td class="num">19</td><td class="num">37%</td><td><span class="pctl mid">≈ avg</span></td></tr>
+        <tr><td>Setter — C</td><td class="num">49</td><td class="num">14</td><td class="num">31%</td><td><span class="pctl low">▼ below</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= CARE ================= -->
+<section class="sec" id="sec-care">
+  <div class="crumb">Pillar · Care</div>
+  <div class="sec-hd"><h2>Care — coaching quality &amp; client progress</h2><span class="goal">Is the coaching actually working</span></div>
+  <p class="sec-sub">Adherence and check-in quality from Pulse IO, plus caseload against the 60–65 client capacity per coach.</p>
+
+  <div class="grid g4">
+    <div class="card"><h3>Avg client adherence <span class="src">Pulse IO</span></h3><div class="kn">78<small>%</small></div><div class="meter"><i style="width:78%"></i></div></div>
+    <div class="card"><h3>Check-in quality score <span class="src">Pulse IO</span></h3><div class="kn">8.2<small>/10</small></div><div class="ksub">Depth &amp; actionability of coach responses</div></div>
+    <div class="card"><h3>Clients flagged at risk <span class="src">Pulse IO</span></h3><div class="kn">5</div><div class="ksub">Adherence &lt;60% for 2+ weeks</div></div>
+    <div class="card"><h3>Active clients / capacity <span class="src">Groundhogg</span></h3><div class="kn">336<small>/375</small></div><div class="ksub">90% utilised · avg 60–65 per coach</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Caseload by coach <span class="src">Groundhogg + Pulse IO</span></h3>
+    <table>
+      <thead><tr><th>Coach</th><th class="num">Clients</th><th class="num">Capacity</th><th class="num">Avg adherence</th><th class="num">Check-in quality</th></tr></thead>
+      <tbody>
+        <tr><td>Coach 1 (Kunal)</td><td class="num">38</td><td class="num">60</td><td class="num">81%</td><td class="num">8.6</td></tr>
+        <tr><td>Coach 2</td><td class="num">58</td><td class="num">62</td><td class="num">83%</td><td class="num">8.4</td></tr>
+        <tr><td>Coach 3</td><td class="num">62</td><td class="num">65</td><td class="num">76%</td><td class="num">7.9</td></tr>
+        <tr><td>Coach 4</td><td class="num">55</td><td class="num">61</td><td class="num">71%</td><td class="num">7.3</td></tr>
+        <tr><td>Coach 5</td><td class="num">60</td><td class="num">64</td><td class="num">80%</td><td class="num">8.1</td></tr>
+        <tr><td>Coach 6</td><td class="num">63</td><td class="num">63</td><td class="num">79%</td><td class="num">8.0</td></tr>
+      </tbody>
+    </table>
+    <div class="tdesc" style="margin-top:8px">Coach 4 is lowest on both adherence and check-in quality — worth a 1:1 on check-in depth this week. "Progress to goal" isn't tracked here since client goals vary too much for one consistent measure — flag if you'd like to define a proxy (e.g. % hitting their own milestone dates).</div>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="sec" id="sec-team">
+  <div class="crumb">Pillar · Team</div>
+  <div class="sec-hd"><h2>Team — coach performance &amp; retention</h2><span class="goal">How the roster is doing, benchmarked</span></div>
+  <p class="sec-sub">Coach-level comparison against the team average and top performer, plus retention and training.</p>
+
+  <div class="grid g3">
+    <div class="card"><h3>Coach retention (12mo) <span class="src">HR log</span></h3><div class="kn">92<small>%</small></div><div class="kdelta up">▲ 4pts vs last year</div></div>
+    <div class="card"><h3>Training completion <span class="src">KMAK OS</span></h3><div class="kn">83<small>%</small></div><div class="meter"><i style="width:83%"></i></div></div>
+    <div class="card"><h3>Avg client satisfaction / coach <span class="src">Delight surveys</span></h3><div class="kn">8.6<small>/10</small></div></div>
+  </div>
+
+  <div class="card">
+    <h3>Coach benchmarking — client retention rate</h3>
+    <div class="cmp-row">
+      <div class="cmp-head"><span class="cl">Coach 3</span><span class="cv">86%<span class="cu"> retention</span></span></div>
+      <div class="cmp-track">
+        <div class="cmp-line"></div>
+        <div class="cmp-mk group" style="left:38%"><span class="dot"></span><span class="lbl">Team avg 84%</span></div>
+        <div class="cmp-mk uk" style="left:70%"><span class="dot"></span><span class="lbl">Top 91%</span></div>
+        <div class="cmp-mk you" style="left:44%"><span class="dot"></span><span class="lbl">Coach 3</span></div>
+      </div>
+      <div class="cmp-scale"><span>70%</span><span>80%</span><span>90%</span><span>100%</span></div>
+    </div>
+    <div class="note">Coach benchmarking view — same widget appears personalised on each coach's "My performance" page.</div>
+  </div>
+</section>
+
+<!-- ================= DELIGHT ================= -->
+<section class="sec" id="sec-delight">
+  <div class="crumb">Pillar · Delight</div>
+  <div class="sec-hd"><h2>Delight — client satisfaction &amp; churn</h2><span class="goal">Are clients happy enough to stay and refer</span></div>
+  <p class="sec-sub">Satisfaction and churn — the pillar that protects lifetime value.</p>
+
+  <div class="grid g3">
+    <div class="card"><h3>Client satisfaction (NPS-style) <span class="src">Surveys</span></h3><div class="kn">71</div><div class="ksub">Promoters minus detractors</div></div>
+    <div class="card"><h3>Referrals this month <span class="src">Groundhogg</span></h3><div class="kn">6</div><div class="kdelta up">▲ 2 vs last month</div></div>
+    <div class="card"><h3>Monthly churn rate <span class="src">Groundhogg</span></h3><div class="kn">6.2<small>%</small></div><div class="kdelta down">▲ 1.1pt vs last month</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Churn risk list <span class="src">Pulse IO + Groundhogg</span></h3>
+    <div class="alert"><span class="ic" style="background:var(--red)"></span><div><b>Client — renews in 5 days, no outreach logged</b><p>Adherence dropped to 48% over the last 2 weeks.</p></div><span class="when">High risk</span></div>
+    <div class="alert"><span class="ic" style="background:var(--red)"></span><div><b>Client — silent on check-ins 9 days</b><p>Previously 90%+ adherence; sudden drop-off.</p></div><span class="when">High risk</span></div>
+    <div class="alert"><span class="ic" style="background:var(--amb)"></span><div><b>Client — asked about pausing</b><p>Cited travel; no pause policy applied yet.</p></div><span class="when">Watch</span></div>
+  </div>
+</section>
+
+<!-- ================= AI PARTNER ================= -->
+<section class="sec" id="sec-ai">
+  <div class="crumb">Intelligence · AI coaching partner</div>
+  <div class="sec-hd"><h2>AI coaching partner</h2><span class="goal">Reads every pillar, surfaces what needs a decision today</span></div>
+  <div class="ai-brief">
+    <div class="ai-hd"><div class="av">⚡</div><div><b>This morning's brief</b><span> · generated 06:02 from all connected sources</span></div></div>
+    <div class="action"><div class="pr" style="background:rgba(255,94,108,.18);color:var(--red)">1</div><div><b>Same-day recovery: 6 high-intent DMs uncontacted since yesterday</b><p>These are flagged high-intent by lead scoring and haven't had a reply in 12+ hours. Booking window closes fast on this segment.</p><div class="impact">◎ Est. 2–3 recoverable bookings if actioned today</div></div></div>
+    <div class="action"><div class="pr" style="background:rgba(255,181,71,.18);color:var(--amb)">2</div><div><b>3 renewals due this week with no outreach logged</b><p>Renewal reminders haven't fired for this batch — likely a gap in the trigger, not the coaches.</p><div class="impact">◎ £900–£1,200 MRR at risk if missed</div></div></div>
+    <div class="action"><div class="pr" style="background:rgba(91,155,255,.18);color:var(--blue)">3</div><div><b>Coach 4's caseload is the outlier on adherence and check-in quality</b><p>71% adherence vs 84% team average — worth a supportive 1:1 rather than a metrics conversation first.</p><div class="impact">◎ Protects ~55 clients' retention trajectory</div></div></div>
+    <div class="ai-input">
+      <input type="text" id="aiInput" placeholder="Ask about any pillar — e.g. 'why did CPL rise this week?'">
+      <button id="aiSend">Ask</button>
+    </div>
+    <div class="ai-log" id="aiLog"></div>
+    <div class="note">This is a static preview of the brief format. Wired to your real data, the partner re-generates each morning and answers follow-up questions against live figures.</div>
+  </div>
+</section>
+
+<!-- ================= MY PERFORMANCE ================= -->
+<section class="sec" id="sec-myperf">
+  <div class="crumb">You · My performance</div>
+  <div class="sec-hd"><h2>My performance</h2><span class="goal">How you're tracking against the team</span></div>
+  <div class="role-banner"><span class="rchip">coach</span><span>Personalised view — <b>only you and leadership see this page for you.</b></span></div>
+
+  <div class="grid g3">
+    <div class="card rank-tile"><div class="rk">#2</div><div class="rl">of 6 coaches this month</div></div>
+    <div class="card"><h3>Clients retained (90-day)</h3><div class="kn">91<small>%</small></div></div>
+    <div class="card"><h3>Client satisfaction</h3><div class="kn">8.7<small>/10</small></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cmp-row">
+      <div class="cmp-head"><span class="cl">Client retention</span><span class="cv">91%</span></div>
+      <div class="cmp-track"><div class="cmp-line"></div>
+        <div class="cmp-mk group" style="left:40%"><span class="dot"></span><span class="lbl">Team avg 84%</span></div>
+        <div class="cmp-mk uk" style="left:78%"><span class="dot"></span><span class="lbl">Top 91%</span></div>
+        <div class="cmp-mk you" style="left:78%"><span class="dot"></span><span class="lbl">You</span></div>
+      </div>
+      <div class="cmp-scale"><span>70%</span><span>80%</span><span>90%</span><span>100%</span></div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-head"><span class="cl">Avg check-in response time</span><span class="cv">14 hrs</span></div>
+      <div class="cmp-track"><div class="cmp-line"></div>
+        <div class="cmp-mk group" style="left:55%"><span class="dot"></span><span class="lbl">Team avg 19h</span></div>
+        <div class="cmp-mk uk" style="left:20%"><span class="dot"></span><span class="lbl">Best 9h</span></div>
+        <div class="cmp-mk you" style="left:33%"><span class="dot"></span><span class="lbl">You</span></div>
+      </div>
+      <div class="cmp-scale"><span>Fast</span><span></span><span></span><span>Slow</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAY & COACHES ================= -->
+<section class="sec" id="sec-payroll">
+  <div class="crumb">Pillar · Profit</div>
+  <div class="sec-hd"><h2>Pay &amp; coaches</h2><span class="goal">Every coach is on their own contract — reconcile them independently</span></div>
+  <p class="sec-sub">Base pay, per-client rate and bonus amounts are set individually per coach's contract. Edit any field — everything recalculates live.</p>
+
+  <div class="card" style="overflow-x:auto">
+    <h3>This month's reconciliation <span class="src">editable · per-coach contract terms</span></h3>
+    <table id="payTable" style="min-width:820px">
+      <thead><tr>
+        <th>Coach</th><th class="num">Base</th><th class="num">Rate / client</th><th class="num">Clients</th>
+        <th class="num">Bonus / transformation</th><th class="num"># transformations</th>
+        <th class="num">Bonus / upsell</th><th class="num"># upsells</th><th class="num">Total pay</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Coach 1 (Kunal)</td><td class="num"><input class="fin" value="1400"></td><td class="num"><input class="fin" value="0"></td><td class="num"><input class="fin" value="38"></td><td class="num"><input class="fin" value="75"></td><td class="num"><input class="fin" value="3"></td><td class="num"><input class="fin" value="60"></td><td class="num"><input class="fin" value="2"></td><td class="num tot">£1,745</td></tr>
+        <tr><td>Coach 2</td><td class="num"><input class="fin" value="650"></td><td class="num"><input class="fin" value="12"></td><td class="num"><input class="fin" value="58"></td><td class="num"><input class="fin" value="50"></td><td class="num"><input class="fin" value="5"></td><td class="num"><input class="fin" value="40"></td><td class="num"><input class="fin" value="4"></td><td class="num tot">£1,756</td></tr>
+        <tr><td>Coach 3</td><td class="num"><input class="fin" value="600"></td><td class="num"><input class="fin" value="10"></td><td class="num"><input class="fin" value="62"></td><td class="num"><input class="fin" value="50"></td><td class="num"><input class="fin" value="4"></td><td class="num"><input class="fin" value="35"></td><td class="num"><input class="fin" value="3"></td><td class="num tot">£1,525</td></tr>
+        <tr><td>Coach 4</td><td class="num"><input class="fin" value="700"></td><td class="num"><input class="fin" value="8"></td><td class="num"><input class="fin" value="55"></td><td class="num"><input class="fin" value="45"></td><td class="num"><input class="fin" value="2"></td><td class="num"><input class="fin" value="35"></td><td class="num"><input class="fin" value="2"></td><td class="num tot">£1,300</td></tr>
+        <tr><td>Coach 5</td><td class="num"><input class="fin" value="620"></td><td class="num"><input class="fin" value="11"></td><td class="num"><input class="fin" value="60"></td><td class="num"><input class="fin" value="55"></td><td class="num"><input class="fin" value="6"></td><td class="num"><input class="fin" value="45"></td><td class="num"><input class="fin" value="5"></td><td class="num tot">£1,835</td></tr>
+        <tr><td>Coach 6</td><td class="num"><input class="fin" value="580"></td><td class="num"><input class="fin" value="9"></td><td class="num"><input class="fin" value="63"></td><td class="num"><input class="fin" value="50"></td><td class="num"><input class="fin" value="3"></td><td class="num"><input class="fin" value="30"></td><td class="num"><input class="fin" value="3"></td><td class="num tot">£1,387</td></tr>
+      </tbody>
+      <tfoot class="fee-tot"><tr><td>Total</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="num" id="payTotal">£9,548</td></tr></tfoot>
+    </table>
+    <div class="note">Formula per row: Total = Base + (Rate/client × Clients) + (Bonus/transformation × # transformations) + (Bonus/upsell × # upsells). Every number here is a placeholder — replace with each coach's real contract terms and this becomes the actual monthly reconciliation.</div>
+  </div>
+</section>
+
+<!-- ================= SOP BUILDER ================= -->
+<section class="sec" id="sec-sop">
+  <div class="crumb">Intelligence · SOP builder</div>
+  <div class="sec-hd"><h2>SOP builder</h2><span class="goal">Turn a flagged issue into a documented procedure in seconds</span></div>
+  <p class="sec-sub">Pick a flagged issue from the dashboard, or describe your own — get a structured, assignable SOP.</p>
+
+  <div class="flagrow" id="flagRow"></div>
+  <div class="sopbar">
+    <input type="text" id="sopInput" placeholder="Or describe a recurring issue to turn into an SOP…">
+    <button class="sopgen" id="sopGen">Generate SOP</button>
+  </div>
+  <div class="sopwrap" id="sopWrap"></div>
+</section>
+
+<!-- ================= PROFIT ================= -->
+<section class="sec" id="sec-profit">
+  <div class="crumb">Pillar · Profit</div>
+  <div class="sec-hd"><h2>Profit — finance</h2><span class="goal">The full P&amp;L view</span></div>
+  <p class="sec-sub">Command centre's finance cards, in more depth — see the overview for the live break-even, revenue-per-coach and net profit figures. This page mirrors those with month-by-month detail once Xero is connected.</p>
+  <div class="grid g3">
+    <div class="card"><h3>MRR <span class="src">Stripe</span></h3><div class="kn">£38.4k</div><div class="kdelta up">▲ £1.2k vs last month</div></div>
+    <div class="card"><h3>Gross margin <span class="src">Xero</span></h3><div class="kn">57<small>%</small></div></div>
+    <div class="card"><h3>Cash in bank <span class="src">Xero</span></h3><div class="kn">£61.2k</div><div class="ksub">3.1 months of runway at current burn</div></div>
+  </div>
+</section>
+
+</main>
+</div>
+
