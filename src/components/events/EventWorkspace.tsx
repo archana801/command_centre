@@ -49,6 +49,13 @@ const EMPTY_CANDIDATE_FORM = {
   price_estimate: "",
 };
 
+type ChatMessage = { role: "user" | "assistant"; text: string };
+const EMPTY_CHATS: Record<CandidateCategory, ChatMessage[]> = {
+  venue: [],
+  accommodation: [],
+  gym: [],
+};
+
 export default function EventWorkspace({
   eventId,
   initialBundle,
@@ -68,6 +75,7 @@ export default function EventWorkspace({
   const [replyUpdates, setReplyUpdates] = useState<
     { candidateName: string; summary: string; suggested_status: string }[] | null
   >(null);
+  const [chats, setChats] = useState(EMPTY_CHATS);
 
   async function reload() {
     const res = await fetch(`/api/events/${eventId}`);
@@ -87,16 +95,37 @@ export default function EventWorkspace({
     }
   }
 
-  async function handleResearch(category: CandidateCategory) {
-    await runAction(`research-${category}`, async () => {
+  async function handleResearch(category: CandidateCategory, instructions: string) {
+    const trimmed = instructions.trim();
+    if (trimmed) {
+      setChats((c) => ({ ...c, [category]: [...c[category], { role: "user", text: trimmed }] }));
+    }
+    const data = await runAction(`research-${category}`, async () => {
       const res = await fetch(`/api/events/${eventId}/research`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ category }),
+        body: JSON.stringify({ category, instructions: trimmed }),
       });
       if (!res.ok) throw new Error("Research request failed");
+      const result = await res.json();
       await reload();
+      return result;
     });
+    if (!data) return; // runAction already surfaced the error banner
+    const count = data.candidates?.length ?? 0;
+    setChats((c) => ({
+      ...c,
+      [category]: [
+        ...c[category],
+        {
+          role: "assistant",
+          text:
+            count > 0
+              ? `Found ${count} option${count === 1 ? "" : "s"} and added ${count === 1 ? "it" : "them"} to the table below.`
+              : "Didn't find any matching options for that — try adjusting the request.",
+        },
+      ],
+    }));
   }
 
   async function handleAddCandidate(category: CandidateCategory) {
@@ -259,19 +288,26 @@ export default function EventWorkspace({
       )}
 
       {tab !== "overview" && (
-        <CandidateTab
-          category={tab}
-          candidates={candidatesFor(bundle, tab)}
-          busy={busy}
-          showAddForm={showAddForm}
-          addForm={addForm}
-          setAddForm={setAddForm}
-          onToggleAddForm={() => setShowAddForm((s) => !s)}
-          onResearch={() => handleResearch(tab)}
-          onAddCandidate={() => handleAddCandidate(tab)}
-          onStatusChange={(id, status) => handleStatusChange(tab, id, status)}
-          onDraft={(c) => openDraft(tab, c)}
-        />
+        <>
+          <ResearchChat
+            key={tab}
+            category={tab}
+            messages={chats[tab]}
+            busy={busy === `research-${tab}`}
+            onSend={(instructions) => handleResearch(tab, instructions)}
+          />
+          <CandidateTab
+            candidates={candidatesFor(bundle, tab)}
+            busy={busy}
+            showAddForm={showAddForm}
+            addForm={addForm}
+            setAddForm={setAddForm}
+            onToggleAddForm={() => setShowAddForm((s) => !s)}
+            onAddCandidate={() => handleAddCandidate(tab)}
+            onStatusChange={(id, status) => handleStatusChange(tab, id, status)}
+            onDraft={(c) => openDraft(tab, c)}
+          />
+        </>
       )}
 
       {draftFor && (
@@ -323,26 +359,22 @@ export default function EventWorkspace({
 }
 
 function CandidateTab({
-  category,
   candidates,
   busy,
   showAddForm,
   addForm,
   setAddForm,
   onToggleAddForm,
-  onResearch,
   onAddCandidate,
   onStatusChange,
   onDraft,
 }: {
-  category: CandidateCategory;
   candidates: CandidateRecord[];
   busy: string | null;
   showAddForm: boolean;
   addForm: typeof EMPTY_CANDIDATE_FORM;
   setAddForm: (f: typeof EMPTY_CANDIDATE_FORM) => void;
   onToggleAddForm: () => void;
-  onResearch: () => void;
   onAddCandidate: () => void;
   onStatusChange: (candidateId: string, status: CandidateStatus) => void;
   onDraft: (candidate: CandidateRecord) => void;
@@ -350,9 +382,6 @@ function CandidateTab({
   return (
     <>
       <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
-        <button className="ev-btn primary" onClick={onResearch} disabled={busy === `research-${category}`}>
-          {busy === `research-${category}` ? "Researching…" : "Research with Claude"}
-        </button>
         <button className="ev-btn" onClick={onToggleAddForm}>
           {showAddForm ? "Cancel" : "+ Add manually"}
         </button>
@@ -457,5 +486,63 @@ function CandidateTab({
         </table>
       )}
     </>
+  );
+}
+
+const CHAT_PLACEHOLDER: Record<CandidateCategory, string> = {
+  venue: "e.g. rooftop space, near downtown, under $8k…",
+  accommodation: "e.g. walkable to the venue, at least 4 bedrooms…",
+  gym: "e.g. open 24/7, has a photo-friendly space for shoots…",
+};
+
+function ResearchChat({
+  category,
+  messages,
+  busy,
+  onSend,
+}: {
+  category: CandidateCategory;
+  messages: ChatMessage[];
+  busy: boolean;
+  onSend: (instructions: string) => void;
+}) {
+  const [input, setInput] = useState("");
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (busy) return;
+    onSend(input);
+    setInput("");
+  }
+
+  return (
+    <div className="ev-card ev-chat">
+      <h3>Ask Claude to research</h3>
+      {(messages.length > 0 || busy) && (
+        <div className="ev-chat-log">
+          {messages.map((m, i) => (
+            <div key={i} className={`ev-chat-msg ${m.role}`}>
+              {m.text}
+            </div>
+          ))}
+          {busy && <div className="ev-chat-msg assistant pending">Searching…</div>}
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="ev-chat-form">
+        <input
+          className="ev-input"
+          placeholder={CHAT_PLACEHOLDER[category]}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          disabled={busy}
+        />
+        <button type="submit" className="ev-btn primary" disabled={busy}>
+          {busy ? "Researching…" : "Research"}
+        </button>
+      </form>
+      <p className="ev-chat-hint">
+        Leave blank for a general search based on this event&rsquo;s saved city, budget, and capacity.
+      </p>
+    </div>
   );
 }

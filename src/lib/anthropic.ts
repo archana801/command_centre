@@ -34,7 +34,8 @@ function extractText(content: Anthropic.ContentBlock[]): string {
 
 export async function researchCandidates(
   event: EventRecord,
-  category: CandidateCategory
+  category: CandidateCategory,
+  instructions?: string
 ): Promise<ResearchResult> {
   const client = getClient();
   const prompt = `Find ${CATEGORY_LABEL[category]} in ${event.city} for this event:
@@ -43,6 +44,7 @@ export async function researchCandidates(
 - Capacity needed: ${event.capacity}
 - Budget: ${event.budget}
 - Additional requirements: ${event.requirements || "none"}
+${instructions ? `\nThe coordinator also specifically asked: ${instructions}` : ""}
 
 Search the web for real, currently-bookable options. Return each candidate with a fit_rating (1-10) scoring how well it matches the budget, capacity, and location, plus a one or two sentence fit_rationale.`;
 

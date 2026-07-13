@@ -55,3 +55,13 @@
 .ev-modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
 
 .ev-error{color:var(--red);font-size:12px;margin-top:8px}
+
+.ev-chat{margin-bottom:16px}
+.ev-chat-log{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;max-height:220px;overflow-y:auto}
+.ev-chat-msg{max-width:80%;padding:8px 12px;border-radius:10px;font-size:12.5px;line-height:1.45}
+.ev-chat-msg.user{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:2px}
+.ev-chat-msg.assistant{align-self:flex-start;background:var(--card2);border:1px solid var(--bord2);color:var(--txt);border-bottom-left-radius:2px}
+.ev-chat-msg.pending{color:var(--soft);font-style:italic}
+.ev-chat-form{display:flex;gap:8px}
+.ev-chat-form .ev-input{flex:1}
+.ev-chat-hint{font-size:10.5px;color:var(--muted);margin:8px 0 0}

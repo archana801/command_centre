@@ -19,7 +19,9 @@ export async function POST(
     return NextResponse.json({ error: "Event not found" }, { status: 404 });
   }
 
-  const result = await researchCandidates(event, category.data);
+  const instructions =
+    typeof body.instructions === "string" ? body.instructions.trim() : "";
+  const result = await researchCandidates(event, category.data, instructions || undefined);
   const now = new Date().toISOString();
   const tab = tabForCategory(category.data);
 
