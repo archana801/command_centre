@@ -1,12 +1,17 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
 
 export default clerkMiddleware(async (auth, request) => {
-  // TEMPORARY DIAGNOSTIC: auth check disabled to isolate a 404 routing issue.
-  // if (!isPublicRoute(request)) {
-  //   await auth.protect();
-  // }
+  if (isPublicRoute(request)) return;
+
+  const { userId } = await auth();
+  if (!userId) {
+    const signInUrl = new URL("/sign-in", request.url);
+    signInUrl.searchParams.set("redirect_url", request.url);
+    return NextResponse.redirect(signInUrl);
+  }
 });
 
 export const config = {
