@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getEventBundle, updateRowById, TABS } from "@/lib/sheets";
 import { getThreadReplies } from "@/lib/gmail";
 import { summarizeReply } from "@/lib/anthropic";
+import { notifySlack } from "@/lib/slack";
 
 export async function POST(
   _req: NextRequest,
@@ -39,6 +40,10 @@ export async function POST(
       candidateName: entry.candidate_name,
       ...summary,
     });
+
+    await notifySlack(
+      `📩 *${entry.candidate_name}* replied about *${event.name}*: ${summary.summary}`
+    );
   }
 
   return NextResponse.json({ updates: results });

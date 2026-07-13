@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { appendRow, generateId, getEventBundle, tabForCategory } from "@/lib/sheets";
 import { candidateCategorySchema } from "@/lib/schemas";
 import { researchCandidates } from "@/lib/anthropic";
+import { notifySlack } from "@/lib/slack";
 
 export async function POST(
   req: NextRequest,
@@ -46,6 +47,12 @@ export async function POST(
       updated_at: now,
     });
     created.push({ id: candidateId, ...candidate });
+  }
+
+  if (created.length > 0) {
+    await notifySlack(
+      `🔍 Found ${created.length} new ${category.data} option${created.length === 1 ? "" : "s"} for *${event.name}*`
+    );
   }
 
   return NextResponse.json({ candidates: created });
