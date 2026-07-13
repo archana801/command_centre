@@ -1,6 +1,26 @@
 import { z } from "zod";
 
-export const eventCreateSchema = z.object({
+export const tripStatusSchema = z.enum([
+  "draft",
+  "researching",
+  "planning",
+  "confirmed",
+  "archived",
+]);
+
+export const tripCreateSchema = z.object({
+  name: z.string().min(1),
+  city: z.string().min(1),
+  start_date: z.string().min(1),
+  end_date: z.string().min(1),
+  timezone: z.string().min(1),
+  team_size: z.string().default(""),
+  budget: z.string().default(""),
+  notes: z.string().default(""),
+});
+export type TripCreateInput = z.infer<typeof tripCreateSchema>;
+
+export const tripEventCreateSchema = z.object({
   name: z.string().min(1),
   city: z.string().min(1),
   start_date: z.string().min(1),
@@ -9,7 +29,7 @@ export const eventCreateSchema = z.object({
   budget: z.string().min(1),
   requirements: z.string().default(""),
 });
-export type EventCreateInput = z.infer<typeof eventCreateSchema>;
+export type TripEventCreateInput = z.infer<typeof tripEventCreateSchema>;
 
 export const candidateCategorySchema = z.enum(["venue", "accommodation", "gym"]);
 
@@ -34,6 +54,57 @@ export const candidateStatusSchema = z.enum([
   "booked",
   "rejected",
 ]);
+
+// --- Photoshoots ---
+
+export const shootTypeSchema = z.enum(["individual", "couple", "unknown"]);
+export const photoshootRowTypeSchema = z.enum(["shoot", "break", "logistics"]);
+export const photoshootStatusSchema = z.enum([
+  "scheduled",
+  "completed",
+  "canceled",
+  "no_show",
+]);
+
+export const photoshootInputSchema = z.object({
+  trip_event_id: z.string().default(""),
+  row_type: photoshootRowTypeSchema.default("shoot"),
+  client_name: z.string().default(""),
+  client_email: z.string().default(""),
+  client_travelling_from: z.string().default(""),
+  coach: z.string().default(""),
+  shoot_type: shootTypeSchema.default("unknown"),
+  shoot_date: z.string().min(1),
+  start_time: z.string().default(""),
+  end_time: z.string().default(""),
+  location: z.string().default(""),
+  gym_candidate_id: z.string().default(""),
+  paid: z.string().default("FALSE"),
+  rota: z.string().default(""),
+  notes: z.string().default(""),
+});
+export type PhotoshootInput = z.infer<typeof photoshootInputSchema>;
+
+export const photoshootPatchSchema = photoshootInputSchema.partial().extend({
+  status: photoshootStatusSchema.optional(),
+});
+
+/**
+ * The only fields a Calendly sync is allowed to write. Deliberately excludes
+ * location/gym_candidate_id/paid/rota/notes/client_travelling_from/trip_event_id
+ * so a re-sync can never clobber manual edits.
+ */
+export const calendlySyncPatchSchema = z.object({
+  client_name: z.string(),
+  client_email: z.string(),
+  coach: z.string(),
+  shoot_type: shootTypeSchema,
+  shoot_date: z.string(),
+  start_time: z.string(),
+  end_time: z.string(),
+  status: photoshootStatusSchema,
+});
+export type CalendlySyncPatch = z.infer<typeof calendlySyncPatchSchema>;
 
 // --- Claude structured-output schemas ---
 

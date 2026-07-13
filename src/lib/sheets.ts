@@ -1,12 +1,20 @@
 import { google, sheets_v4 } from "googleapis";
-import type { EventRecord, CandidateRecord, OutreachLogRecord } from "./types";
+import type {
+  TripRecord,
+  TripEventRecord,
+  CandidateRecord,
+  OutreachLogRecord,
+  PhotoshootRecord,
+} from "./types";
 
 const TABS = {
+  trips: "Trips",
   events: "Events",
   venues: "Venues",
   accommodations: "Accommodations",
   gyms: "Gyms",
   outreachLog: "OutreachLog",
+  photoshoots: "Photoshoots",
 } as const;
 
 export type TabName = (typeof TABS)[keyof typeof TABS];
@@ -78,17 +86,19 @@ export async function readTable<T>(tab: TabName): Promise<T[]> {
 }
 
 /**
- * Fetches an event's Event row plus all related candidate/outreach rows in a
- * single batchGet call, then filters by event_id in memory. Avoids N+1 reads
- * for the event detail page.
+ * Fetches a trip's row plus its events/accommodations/gyms/photoshoots/outreach
+ * log in a single batchGet call, filtered by trip_id in memory. Avoids N+1 reads
+ * for the trip detail page. Venue candidates live under individual TripEvents —
+ * see getTripEventBundle.
  */
-export async function getEventBundle(eventId: string) {
+export async function getTripBundle(tripId: string) {
   const sheets = getSheetsClient();
   const ranges = [
+    `${TABS.trips}!A:Z`,
     `${TABS.events}!A:Z`,
-    `${TABS.venues}!A:Z`,
     `${TABS.accommodations}!A:Z`,
     `${TABS.gyms}!A:Z`,
+    `${TABS.photoshoots}!A:Z`,
     `${TABS.outreachLog}!A:Z`,
   ];
   const res = await sheets.spreadsheets.values.batchGet({
@@ -96,22 +106,45 @@ export async function getEventBundle(eventId: string) {
     ranges,
   });
 
-  const [eventsRows, venuesRows, accommodationsRows, gymsRows, outreachRows] =
+  const [tripsRows, eventsRows, accommodationsRows, gymsRows, photoshootsRows, outreachRows] =
     res.data.valueRanges?.map((r) => (r.values as string[][]) ?? []) ?? [];
 
-  const events = rowsToObjects<EventRecord>(eventsRows ?? []);
-  const event = events.find((e) => e.id === eventId) ?? null;
+  const trips = rowsToObjects<TripRecord>(tripsRows ?? []);
+  const trip = trips.find((t) => t.id === tripId) ?? null;
 
-  const byEvent = <T extends { event_id: string }>(rows: string[][]) =>
-    rowsToObjects<T>(rows ?? []).filter((r) => r.event_id === eventId);
+  const byTrip = <T extends { trip_id: string }>(rows: string[][]) =>
+    rowsToObjects<T>(rows ?? []).filter((r) => r.trip_id === tripId);
 
   return {
-    event,
-    venues: byEvent<CandidateRecord>(venuesRows ?? []),
-    accommodations: byEvent<CandidateRecord>(accommodationsRows ?? []),
-    gyms: byEvent<CandidateRecord>(gymsRows ?? []),
-    outreachLog: byEvent<OutreachLogRecord>(outreachRows ?? []),
+    trip,
+    events: byTrip<TripEventRecord>(eventsRows ?? []),
+    accommodations: byTrip<CandidateRecord>(accommodationsRows ?? []),
+    gyms: byTrip<CandidateRecord>(gymsRows ?? []),
+    photoshoots: byTrip<PhotoshootRecord>(photoshootsRows ?? []),
+    outreachLog: byTrip<OutreachLogRecord>(outreachRows ?? []),
   };
+}
+
+/** Fetches a single TripEvent plus its venue candidates (filtered by trip_event_id). */
+export async function getTripEventBundle(tripEventId: string) {
+  const sheets = getSheetsClient();
+  const ranges = [`${TABS.events}!A:Z`, `${TABS.venues}!A:Z`];
+  const res = await sheets.spreadsheets.values.batchGet({
+    spreadsheetId: getSpreadsheetId(),
+    ranges,
+  });
+
+  const [eventsRows, venuesRows] =
+    res.data.valueRanges?.map((r) => (r.values as string[][]) ?? []) ?? [];
+
+  const events = rowsToObjects<TripEventRecord>(eventsRows ?? []);
+  const tripEvent = events.find((e) => e.id === tripEventId) ?? null;
+
+  const venues = rowsToObjects<CandidateRecord>(venuesRows ?? []).filter(
+    (v) => v.trip_event_id === tripEventId
+  );
+
+  return { tripEvent, venues };
 }
 
 async function getHeader(tab: TabName): Promise<string[]> {

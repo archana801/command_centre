@@ -8,7 +8,17 @@ import {
   type EmailDraft,
   type ReplySummary,
 } from "./schemas";
-import type { CandidateCategory, EventRecord } from "./types";
+import type { CandidateCategory } from "./types";
+
+export interface ResearchContext {
+  name: string;
+  city: string;
+  start_date: string;
+  end_date: string;
+  capacity: string;
+  budget: string;
+  requirements: string;
+}
 
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5";
 
@@ -33,17 +43,17 @@ function extractText(content: Anthropic.ContentBlock[]): string {
 }
 
 export async function researchCandidates(
-  event: EventRecord,
+  context: ResearchContext,
   category: CandidateCategory,
   instructions?: string
 ): Promise<ResearchResult> {
   const client = getClient();
-  const prompt = `Find ${CATEGORY_LABEL[category]} in ${event.city} for this event:
-- Event: ${event.name}
-- Dates: ${event.start_date} to ${event.end_date}
-- Capacity needed: ${event.capacity}
-- Budget: ${event.budget}
-- Additional requirements: ${event.requirements || "none"}
+  const prompt = `Find ${CATEGORY_LABEL[category]} in ${context.city} for this:
+- Name: ${context.name}
+- Dates: ${context.start_date} to ${context.end_date}
+- Capacity needed: ${context.capacity}
+- Budget: ${context.budget}
+- Additional requirements: ${context.requirements || "none"}
 ${instructions ? `\nThe coordinator also specifically asked: ${instructions}` : ""}
 
 Search the web for real, currently-bookable options. Return each candidate with a fit_rating (1-10) scoring how well it matches the budget, capacity, and location, plus a one or two sentence fit_rationale.`;
@@ -74,15 +84,15 @@ Search the web for real, currently-bookable options. Return each candidate with 
 }
 
 export async function draftOutreachEmail(
-  event: EventRecord,
+  context: ResearchContext,
   candidateName: string,
   category: CandidateCategory,
   details: string
 ): Promise<EmailDraft> {
   const client = getClient();
-  const prompt = `Draft a short, friendly outreach email to "${candidateName}" (a ${CATEGORY_LABEL[category]}) about hosting our event "${event.name}" in ${event.city} from ${event.start_date} to ${event.end_date}, for ${event.capacity} people, budget ${event.budget}.
+  const prompt = `Draft a short, friendly outreach email to "${candidateName}" (a ${CATEGORY_LABEL[category]}) about hosting "${context.name}" in ${context.city} from ${context.start_date} to ${context.end_date}, for ${context.capacity} people, budget ${context.budget}.
 Known details about this candidate: ${details || "none"}
-Ask about availability, pricing, and whether they can accommodate our requirements: ${event.requirements || "none"}.`;
+Ask about availability, pricing, and whether they can accommodate our requirements: ${context.requirements || "none"}.`;
 
   const response = await client.messages.create({
     model: MODEL,
